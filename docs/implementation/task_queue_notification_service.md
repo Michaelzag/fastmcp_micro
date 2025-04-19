@@ -60,6 +60,34 @@ Track user tasks, manage a queue, and trigger notifications based on rules, expo
 - Python packages: `fastmcp`, queue/notification libs (e.g., `redis`, `smtplib`)
 - MCP runtime
 
+## Implementation Details
+
+### Packages Used
+- `fastmcp`
+- `redis` (queue management)
+- `notifiers` (for notifications)
+- `pydantic`
+- `logfire`
+
+### Implementation Process
+1. **Schema Definition:**
+   - Use Pydantic for `Task` and related models.
+2. **Queue/Notification Integration:**
+   - Use `redis` for task queue management.
+   - Use `notifiers` for sending notifications (email, etc.).
+3. **MCP Interface:**
+   - Expose `create_task`, `complete_task`, `trigger_notification`, and `get_task` as FastMCP endpoints.
+4. **Security:**
+   - Store credentials in env/secret manager.
+   - No sensitive data in logs.
+5. **Testing:**
+   - Mock Redis and notification backends for unit tests.
+   - Contract tests for schema compliance.
+6. **REST API Exposure:**
+   - Expose via FastAPI, document with OpenAPI.
+7. **Deployment:**
+   - Containerize, use `.env` for secrets.
+
 ## Versioning & Change Management
 - Semver; contract changes require major version bump and contract test update
 
@@ -81,3 +109,4 @@ Track user tasks, manage a queue, and trigger notifications based on rules, expo
 - [FastMCP README: Tools](../../fastmcp/README.md#tools)
 - [FastMCP server implementation](../../fastmcp/src/fastmcp/server/server.py)
 - [FastMCP test suite](../../fastmcp/tests)
+- [fastmcp_spec.md](../fastmcp_spec.md)

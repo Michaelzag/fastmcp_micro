@@ -59,6 +59,34 @@ Enrich graph nodes with additional data from web, APIs, or plugins, and expose e
 - Logs all enrichment attempts and errors
 - Metrics: enrichment latency, error rate
 
+## Implementation Details
+
+### Packages Used
+- `fastmcp`
+- `httpx` (for async enrichment calls)
+- `pydantic`
+- `logfire`
+- Plugin management: custom or `importlib`
+
+### Implementation Process
+1. **Schema Definition:**
+   - Use Pydantic for `GraphNode` and `EnrichedNode`.
+2. **Plugin System:**
+   - Design a plugin interface for enrichment modules.
+   - Dynamically load plugins (using `importlib` or similar).
+3. **MCP Interface:**
+   - Expose `enrich_content` tool and `get_enriched_node` resource.
+4. **Security:**
+   - Store API keys in env/secret manager.
+   - No sensitive data in logs.
+5. **Testing:**
+   - Unit tests for plugin logic.
+   - Contract tests for schemas.
+6. **REST API Exposure:**
+   - Expose via FastAPI, document with OpenAPI.
+7. **Deployment:**
+   - Containerize, use `.env` for secrets.
+
 ## REST API Exposure
 - All MCP tools and resources for this service are also exposed as REST endpoints using FastMCP's FastAPI integration.
 - REST endpoints follow FastAPI/FastMCP conventions and are documented via OpenAPI (Swagger).
@@ -69,3 +97,4 @@ Enrich graph nodes with additional data from web, APIs, or plugins, and expose e
 - [FastMCP README: Tools](../../fastmcp/README.md#tools)
 - [FastMCP server implementation](../../fastmcp/src/fastmcp/server/server.py)
 - [FastMCP test suite](../../fastmcp/tests)
+- [fastmcp_spec.md](../fastmcp_spec.md)

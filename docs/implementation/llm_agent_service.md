@@ -61,6 +61,33 @@ Handle agentic tasks such as summarization, reasoning, and content generation us
 - Python packages: `fastmcp`, LLM SDK (e.g., `openai`)
 - MCP runtime
 
+## Implementation Details
+
+### Packages Used
+- `fastmcp`
+- `openai` or `pydantic-ai` (LLM integration)
+- `pydantic`
+- `logfire`
+
+### Implementation Process
+1. **Schema Definition:**
+   - Use Pydantic for `AgentTask`, `AgentResult`, etc.
+2. **LLM Integration:**
+   - Integrate with OpenAI or pydantic-ai for LLM tasks.
+   - Securely handle API keys.
+3. **MCP Interface:**
+   - Expose `run_agent_task`, `get_agent_result`, and `agent_prompt` via FastMCP.
+4. **Security:**
+   - No sensitive data in logs.
+   - Store LLM API keys in env/secret manager.
+5. **Testing:**
+   - Mock LLM API for unit tests.
+   - Contract tests for schema compliance.
+6. **REST API Exposure:**
+   - Expose via FastAPI, document with OpenAPI.
+7. **Deployment:**
+   - Containerize, use `.env` for secrets.
+
 ## Versioning & Change Management
 - Semver; contract changes require major version bump and contract test update
 
@@ -76,3 +103,4 @@ Handle agentic tasks such as summarization, reasoning, and content generation us
 - [FastMCP README: Tools](../../fastmcp/README.md#tools)
 - [FastMCP server implementation](../../fastmcp/src/fastmcp/server/server.py)
 - [FastMCP test suite](../../fastmcp/tests)
+- [fastmcp_spec.md](../fastmcp_spec.md)
